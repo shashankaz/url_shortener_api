@@ -1,6 +1,7 @@
 import { Url } from "../models/urlModel.js";
 import shortid from "shortid";
 import { isValidUrl } from "../utils/helpers.js";
+import qr from "qr-image";
 
 export const shortenUrl = async (req, res) => {
   try {
@@ -26,6 +27,8 @@ export const shortenUrl = async (req, res) => {
     }
 
     const baseUrl = `${req.protocol}://${req.get("host")}`;
+    const redirectUrl = `${baseUrl}/${shortUrl}`;
+    const qrCode = qr.imageSync(redirectUrl, { type: "png" }); // Generate the QR code as a buffer
 
     const url = await Url.create({
       originalUrl,
@@ -38,7 +41,8 @@ export const shortenUrl = async (req, res) => {
       success: true,
       url: {
         ...url.toObject(),
-        redirectUrl: `${baseUrl}/${shortUrl}`,
+        redirectUrl,
+        qrCode: qrCode.toString("base64"), // Convert buffer to base64 string
       },
     });
   } catch (error) {
@@ -49,7 +53,7 @@ export const shortenUrl = async (req, res) => {
 export const getUrls = async (req, res) => {
   try {
     const urls = await Url.find({ user: req.user._id });
-    
+
     const baseUrl = `${req.protocol}://${req.get("host")}`;
 
     const urlsWithRedirect = urls.map((url) => ({
