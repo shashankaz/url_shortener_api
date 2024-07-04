@@ -22,6 +22,12 @@ A URL Shortener API built with Node.js, Express, and MongoDB. The API allows use
   - Track the number of clicks on each shortened URL
   - Return total links generated and total clicks for the user
 
+- **API Rate Limiting**: 
+  - Prevent abuse with rate limiting.
+
+- **QR Code Generation**: 
+  - Generate QR codes for shortened URLs.
+
 - **URL Redirection**:
   - Redirect to the original URL when accessing the short URL
   - Increment the click count on each redirect
@@ -106,5 +112,3 @@ A URL Shortener API built with Node.js, Express, and MongoDB. The API allows use
 - Use a tool like Postman or cURL to interact with the API.
 - Register a new user and log in to get the authentication cookie.
 - Use the authentication cookie to access the URL shortening and management endpoints.
-
----
