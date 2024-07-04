@@ -4,6 +4,7 @@ import userRouter from "./routes/userRoutes.js";
 import urlRouter from "./routes/urlRoutes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { apiLimiter } from "./middlewares/apiLimiter.js";
 
 export const app = express();
 config();
@@ -17,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(apiLimiter);
 
 app.use("/api/auth", userRouter);
 app.use(urlRouter);
