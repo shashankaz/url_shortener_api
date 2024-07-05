@@ -30,11 +30,4 @@ const UrlSchema = new mongoose.Schema(
   }
 );
 
-UrlSchema.pre("save", function (next) {
-  if (!this.nameUrl) {
-    this.nameUrl = this.originalUrl;
-  }
-  next();
-});
-
 export const Url = mongoose.model("Url", UrlSchema);
