@@ -1,6 +1,6 @@
 import { Url } from "../models/urlModel.js";
-import shortid from "shortid";
-import { isValidUrl } from "../utils/helpers.js";
+import { nanoid } from "nanoid";
+import { handleErrors, isValidUrl } from "../utils/helpers.js";
 import qr from "qr-image";
 
 export const shortenUrl = async (req, res) => {
@@ -14,7 +14,7 @@ export const shortenUrl = async (req, res) => {
       });
     }
 
-    let shortUrl = customShortUrl || shortid.generate();
+    let shortUrl = customShortUrl || nanoid(10);
 
     if (customShortUrl) {
       const existingUrl = await Url.findOne({ shortUrl: customShortUrl });
